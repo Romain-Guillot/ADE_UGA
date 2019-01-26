@@ -1,14 +1,17 @@
 package com.adeuga.develob.ade_uga.fc
 
+import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
 
-class Calendar {
+class Calendar(var date:Date) : Serializable {
     private var sorted = false
-    private val events = ArrayList<CalendarEvent>()
+    private var events = ArrayList<CalendarEvent>()
 
     init {
-
+        val parser = IcsParser(0, this.date)
+        parser.execute()
+        this.events = parser.get()
     }
 
     fun addEvent(e: CalendarEvent) {
@@ -30,6 +33,10 @@ class Calendar {
             sorted = true
         }
         return this.events
+    }
+
+    fun createNextDayCalendar() : Calendar {
+        return Calendar(this.date)
     }
 
 }

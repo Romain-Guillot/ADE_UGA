@@ -7,9 +7,10 @@ import java.net.URL
 import java.util.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
+import kotlin.collections.ArrayList
 
 
-class IcsParser constructor (val idResource:Int, val date:Date) : AsyncTask<Void, Void, Calendar>()  {
+class IcsParser constructor (val idResource:Int, val date:Date) : AsyncTask<Void, Void, ArrayList<CalendarEvent>>()  {
 
     init {
 //        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
@@ -17,7 +18,7 @@ class IcsParser constructor (val idResource:Int, val date:Date) : AsyncTask<Void
 
     }
 
-    override fun doInBackground(vararg params: Void?): Calendar {
+    override fun doInBackground(vararg params: Void?): ArrayList<CalendarEvent> {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
         val dateChoosed:String = dateFormat.format(date)
         val urlStr = "https://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=11608&projectId=7&calType=ical&firstDate=$dateChoosed&lastDate=$dateChoosed"
@@ -35,7 +36,7 @@ class IcsParser constructor (val idResource:Int, val date:Date) : AsyncTask<Void
             //error
             throw Exception()
         }
-        var content = String(dataBuff)
+        var content = String(dataBuff,0, byteReaded)
         var tmp = 0
         while(byteReaded < lenghtOfFile) {
             tmp = inBuff.read(dataBuff, 0, 1024)
@@ -43,18 +44,15 @@ class IcsParser constructor (val idResource:Int, val date:Date) : AsyncTask<Void
             byteReaded += tmp
             content  += String(dataBuff, 0, tmp)
         }
-        Log.d(">>>DEBUG", content)
         return this.buildCalendar(content)
     }
 
 
-    fun buildCalendar(ics:String) : Calendar {
-        Log.d(">>> DEBUG" , "BEGIN TO BUILD CALENDAR")
+    fun buildCalendar(ics:String) :ArrayList<CalendarEvent> {
         val lines:Array<String> = ics.split("\n").toTypedArray()
         var i = 0
         val size = lines.size
-        var calendar = Calendar()
-
+        var events = ArrayList<CalendarEvent>()
 
         while(i<size) {
 
@@ -102,13 +100,12 @@ class IcsParser constructor (val idResource:Int, val date:Date) : AsyncTask<Void
                 }
                 i+=1
             }
-            calendar.addEvent(currentEvent)
+            events.add(currentEvent)
             i+=1
 
         }
 
-        Log.d(">>> DEBUG", "Calendare built")
-        return calendar
+        return events
     }
 
     fun toDate(str:String) : Date {

@@ -1,6 +1,8 @@
 package com.adeuga.develob.ade_uga.ui
 
 import android.support.v7.widget.RecyclerView
+import android.text.Html
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +10,7 @@ import android.widget.TextView
 import com.adeuga.develob.ade_uga.R
 import com.adeuga.develob.ade_uga.fc.CalendarEvent
 
-class EventsViewAdapter(val eventsList:ArrayList<CalendarEvent>) : RecyclerView.Adapter<EventsViewAdapter.MyViewHolder>() {
+class EventsViewAdapter(private val eventsList:ArrayList<CalendarEvent>) : RecyclerView.Adapter<EventsViewAdapter.MyViewHolder>() {
 
     class MyViewHolder constructor (v:View) : RecyclerView.ViewHolder(v)  {
         var title:TextView = v.findViewById(R.id.events_title)
@@ -22,8 +24,10 @@ class EventsViewAdapter(val eventsList:ArrayList<CalendarEvent>) : RecyclerView.
     fun onBindViewHolder(viewHolder: MyViewHolder, position : Int) {
         val event: CalendarEvent = eventsList[position]
         viewHolder.title.text = event.title
-        viewHolder.description.text = event.description
-        viewHolder.begin.text = event.getBeginHour()[0]
+        viewHolder.description.text = event.description?.replace("\\n", "\n")?.trim()
+        viewHolder.begin.text = event.getBeginHour()
+        viewHolder.end.text = event.getEndHour()
+        viewHolder.location.text = event.location
     }
 
     override

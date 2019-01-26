@@ -1,14 +1,18 @@
 package com.adeuga.develob.ade_uga.fc
 
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CalendarEvent : Comparable<CalendarEvent> {
+class CalendarEvent : Comparable<CalendarEvent>, Serializable {
 
 
     var title:String? = null
+        set(value) { field = value?.trim()}
     var description:String? = null
+        set(value) { field = value?.trim()}
     var location:String? = null
+        set(value) { field = value?.trim()}
     var begin:Date? = null
     var end:Date? = null
 
@@ -20,9 +24,14 @@ class CalendarEvent : Comparable<CalendarEvent> {
         return begin.toString()
     }
 
-    fun getBeginHour():List<String> {
-        val dateStr = SimpleDateFormat("dd:HH:mm").format(this.begin)
-        return dateStr.split(":")
+    fun getBeginHour() : String {
+        val dateStr = SimpleDateFormat("HH:mm").format(this.begin)
+        return dateStr
+    }
+
+    fun getEndHour() : String {
+        val dateStr = SimpleDateFormat("HH:mm").format(this.end)
+        return dateStr
     }
 
 

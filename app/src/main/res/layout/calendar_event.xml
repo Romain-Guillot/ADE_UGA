@@ -3,21 +3,22 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-android:orientation="horizontal">
+android:orientation="horizontal"
+android:layout_marginBottom="10dp">
 
 <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:textAlignment="center">
     <TextView
         android:id="@+id/events_begin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="10h15"/>
+        style="@style/eventDateBegin"/>
     <TextView
         android:id="@+id/events_end"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="10h15"/>
+        style="@style/eventDateEnd" />
 </LinearLayout>
 
 <LinearLayout
@@ -26,18 +27,19 @@ android:orientation="horizontal">
         android:orientation="vertical">
     <TextView
             android:id="@+id/events_title"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Titre"/>
+            android:layout_height="wrap_content"/>
     <TextView
             android:id="@+id/events_description"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Desription"/>
+            android:layout_height="wrap_content"
+            android:lines="2"/>
     <TextView
             android:id="@+id/events_location"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Desription"/>
+            android:layout_height="wrap_content"/>
 </LinearLayout>
 </LinearLayout>
