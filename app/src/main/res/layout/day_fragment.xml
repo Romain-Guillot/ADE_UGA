@@ -7,14 +7,18 @@
     <TextView
             android:id="@+id/dayViewTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
+            android:textColor="#000"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dayViewListView"
             android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>
 

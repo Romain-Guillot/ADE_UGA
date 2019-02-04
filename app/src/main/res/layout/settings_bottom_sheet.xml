@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/settings_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:behavior_hideable="true"
+        android:background="#ff00ff"
+        app:behavior_peekHeight="0dp"
+        style="@style/Widget.MaterialComponents.BottomSheet.Modal"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        android:elevation="30dp"
+        android:clickable="true">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:text="Settings"
+                />
+
+</LinearLayout>

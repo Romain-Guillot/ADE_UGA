@@ -1,6 +1,6 @@
 package com.adeuga.develob.ade_uga.ui
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Html
 import android.text.Spanned
 import android.view.LayoutInflater
