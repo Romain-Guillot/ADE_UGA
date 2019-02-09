@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         /* Setting DaysPagerAdapter with current date */
         val currentDate:Date = java.util.Calendar.getInstance().time
         val initPos:Int = Int.MAX_VALUE/2 // initial position (negative position is impossible)
-        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "calendar").fallbackToDestructiveMigration().build()
+        val db:AppDatabase = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "calendar").fallbackToDestructiveMigration().build()
         this.daysPagerAdapter = DaysPagerAdapter(supportFragmentManager, currentDate, initPos, db)
         this.daysPager.adapter = daysPagerAdapter
         this.daysPager.currentItem = initPos

@@ -12,3 +12,17 @@ data class DbDayData(
     @ColumnInfo(name = "date") var date: String,
     @ColumnInfo(name = "content") var content: String
 )
+
+@Entity(tableName = "days")
+data class DbTask(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "date") var date: String,
+    @ColumnInfo(name = "title") var title: String,
+    @ColumnInfo(name="tags") var tags: ArrayList<String>
+)
+
+@Entity(tableName = "tags", primaryKeys = arrayOf("name"))
+data class DbTag(
+    @ColumnInfo(name = "name") var name: String,
+    @ColumnInfo(name = "color") var color: String
+)
