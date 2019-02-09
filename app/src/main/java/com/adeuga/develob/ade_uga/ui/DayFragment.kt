@@ -9,16 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adeuga.develob.ade_uga.R
 import com.adeuga.develob.ade_uga.fc.Calendar
 import com.adeuga.develob.ade_uga.fc.CalendarEvent
+import com.adeuga.develob.ade_uga.fc.UIcalendar
 import java.util.*
 
 import kotlin.collections.ArrayList
 
 
-class DayFragment : Fragment() {
+class DayFragment : Fragment(), UIcalendar {
+
 
     private lateinit var eventsView: RecyclerView
     private lateinit var eventsAdapter: EventsViewAdapter
@@ -41,18 +44,19 @@ class DayFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
+//        val view:View = inflater.inflate(R.layout.day_fragment, container, false)
+//        this.refreshLayout = view.findViewById(R.id.refreshLayout)
+
         return inflater.inflate(R.layout.day_fragment, container, false)
+
+
     }
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        refreshLayout = activity?.findViewById(R.id.refreshLayout)
-        refreshLayout?.setOnRefreshListener {
-            Log.d(">>>>", "OKKKKKK")
-            updateCalendar()
-        }
+        setRefreshLayout()
 
         this.calendar = arguments?.getSerializable(DayFragment.DAYFRAGMENT_ARG) as Calendar
         this.calendar?.setFragment(this)
@@ -60,10 +64,12 @@ class DayFragment : Fragment() {
 
     }
 
+
+
     fun setEventsList() {
-        Log.d(">>>", "set event list")
+        refreshLayout?.isRefreshing = false
+
         activity?.runOnUiThread {
-            refreshLayout?.isRefreshing = false
 
             if(calendar != null) {
                 view?.findViewById<TextView>(R.id.dayViewTitle)?.text = calendar?.getDateToString()
@@ -97,6 +103,25 @@ class DayFragment : Fragment() {
         Log.d(">>>", "UI update")
 //        (activity as MainActivity).daysPagerAdapter.getItem((activity as MainActivity).daysPager.currentItem) as DayFragment
         this.calendar?.update()
+    }
+
+    private fun setRefreshLayout() {
+        this.refreshLayout = view?.findViewById(R.id.refreshLayout)
+        Log.d(">>>", "set refresh layout " + refreshLayout.toString())
+        refreshLayout?.setOnRefreshListener {
+            Log.d(">>>>", "OKKKKKK")
+            updateCalendar()
+        }
+    }
+
+    override fun notifyEventListChanged() {
+        this.setEventsList()
+    }
+
+    override fun notifyDataDownloaded() {
+        activity?.runOnUiThread{
+            Toast.makeText(context, "Mise à jour réussie", Toast.LENGTH_SHORT).show()
+        }
     }
 
 

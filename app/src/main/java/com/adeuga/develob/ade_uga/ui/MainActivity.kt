@@ -56,9 +56,8 @@ class MainActivity : AppCompatActivity() {
         settingsBottomSheet = BottomSheetBehavior.from(settingsBottomSheetLayout)
         settingsBottomSheet.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when(newState) {
-                    BottomSheetBehavior.STATE_COLLAPSED -> bg.visibility = View.GONE
-//                    else -> bg.visibility = View.GONE
+                if(newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                     bg.visibility = View.GONE
                 }
             }
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -74,7 +73,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         val sdf = SimpleDateFormat("yyyy/MM/dd")
-//        val d: Date = sdf.parse("2019/01/24")
         val d: Date = java.util.Calendar.getInstance().time
 
         val initPos:Int = Int.MAX_VALUE/2
@@ -85,7 +83,6 @@ class MainActivity : AppCompatActivity() {
         daysPagerAdapter = DaysPagerAdapter(supportFragmentManager, d, initPos, db)
         daysPager.adapter = daysPagerAdapter
         daysPager.currentItem = initPos
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

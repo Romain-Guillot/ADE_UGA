@@ -1,25 +1,20 @@
 package com.adeuga.develob.ade_uga.fc
 
-import android.content.Context
 import android.util.Log
-import androidx.room.Room
 import com.adeuga.develob.ade_uga.fc.db.AppDatabase
 import com.adeuga.develob.ade_uga.fc.db.DbDayData
 import com.adeuga.develob.ade_uga.fc.db.DbDayDataDao
 import com.adeuga.develob.ade_uga.fc.db.Utils
-import com.adeuga.develob.ade_uga.ui.DayFragment
-import com.adeuga.develob.ade_uga.ui.DaysPagerAdapter
 import java.io.Serializable
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.concurrent.thread
+
 
 class Calendar(var date:Date, var db:AppDatabase) : Serializable {
     private var sorted = false
     private var events = ArrayList<CalendarEvent>()
-    private var frag:DayFragment? = null
+    private var ui:UIcalendar? = null
     private var dao:DbDayDataDao? = null
 
 
@@ -51,6 +46,7 @@ class Calendar(var date:Date, var db:AppDatabase) : Serializable {
             this.events = parser.get()
             dao?.insert(DbDayData(Utils.getStandartDate(this.date), parser.getContent()))
             Log.d(">>>>", "Data inserted")
+            this.ui?.notifyDataDownloaded()
         }else {
             val parser = IcsParser(0, this.date, res.content)
             parser.execute()
@@ -59,8 +55,8 @@ class Calendar(var date:Date, var db:AppDatabase) : Serializable {
         notifyUI()
     }
 
-    fun setFragment(frag:DayFragment) {
-        this.frag = frag
+    fun setFragment(ui:UIcalendar) {
+        this.ui = ui
     }
 
     fun update() {
@@ -70,11 +66,12 @@ class Calendar(var date:Date, var db:AppDatabase) : Serializable {
             parser.execute()
             this.events = parser.get()
             notifyUI()
+            this.ui?.notifyDataDownloaded()
         }.start()
     }
 
     fun notifyUI() {
-        this.frag?.setEventsList()
+        this.ui?.notifyEventListChanged()
     }
 
 
