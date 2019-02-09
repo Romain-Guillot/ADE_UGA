@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ADE_UGA</string>
+    <string name="add_task">Ajouter une tache</string>
+    <string name="settings_hover">Paramètres</string>
 </resources>

@@ -57,9 +57,9 @@ class DayFragment : Fragment(), UIcalendar {
         super.onActivityCreated(savedInstanceState)
 
         this.titleView = view?.findViewById(R.id.dayViewTitle)
-        setRefreshLayout()
         this.calendar = arguments?.getSerializable(DayFragment.DAYFRAGMENT_ARG) as Calendar //deserialize calendar from args
         this.calendar?.addUI(this)
+        setRefreshLayout()
         setEventsList()
     }
 
@@ -74,8 +74,8 @@ class DayFragment : Fragment(), UIcalendar {
             if (events != null) { // set recycler list with events
                 val view:View? = view
                 if (view != null) {
-                    eventsAdapter = EventsViewAdapter(events)
-                    eventsView = view.findViewById<RecyclerView>(R.id.dayViewListView).apply {
+                    this.eventsAdapter = EventsViewAdapter(events)
+                    this.eventsView = view.findViewById<RecyclerView>(R.id.dayViewListView).apply {
                             setHasFixedSize(true)
                             layoutManager = LinearLayoutManager(this.context)
                             adapter = eventsAdapter
@@ -110,8 +110,8 @@ class DayFragment : Fragment(), UIcalendar {
      */
     override fun notifyEventListChanged() {
         activity?.runOnUiThread {
-            this.setEventsList()
-            refreshLayout?.isRefreshing = false
+            setEventsList()
+            this.refreshLayout?.isRefreshing = false
         }
     }
 

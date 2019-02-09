@@ -1,45 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Single event layout
+-->
 <LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:orientation="horizontal"
-android:layout_marginBottom="10dp">
-
-<LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:textAlignment="center">
-    <TextView
-        android:id="@+id/events_begin"
-        style="@style/eventDateBegin"/>
-    <TextView
-        android:id="@+id/events_end"
-        style="@style/eventDateEnd" />
-</LinearLayout>
-
-<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-    <TextView
-            android:id="@+id/events_title"
-            android:textColor="#000"
-            android:textSize="18sp"
-            android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+
+
+    <!-- Left hours information (begin and end) -->
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:textAlignment="center">
+        <!--begin hour-->
+        <TextView
+            android:id="@+id/events_begin"
+            style="@style/eventDateBegin"/>
+        <!--end hour-->
+        <TextView
+            android:id="@+id/events_end"
+            style="@style/eventDateEnd" />
+    </LinearLayout>
+
+
+    <!-- Events content (title, description, etc) -->
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    <TextView
-            android:id="@+id/events_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lines="2"/>
-    <TextView
-            android:id="@+id/events_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-</LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <!--title-->
+        <TextView
+                android:id="@+id/events_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="@dimen/event_title_size"
+                android:textStyle="bold"/>
+        <!--description-->
+        <TextView
+                android:id="@+id/events_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/event_normal_size"
+                android:lines="2"/>
+        <!--location-->
+        <TextView
+                android:id="@+id/events_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/event_normal_size"/>
+    </LinearLayout>
+
 </LinearLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--events dimen-->
+    <dimen name="event_title_size">18sp</dimen>
+    <dimen name="event_normal_size">14sp</dimen>
+
+
+    <!-- general calendar dimen -->
+    <dimen name="date_title_size">30sp</dimen>
+</resources>

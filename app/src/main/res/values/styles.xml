@@ -2,12 +2,12 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--  -->
     <style name="HorizontalRule">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">1dip</item>
@@ -15,6 +15,7 @@
         <item name="android:layout_marginTop">70dp</item>
     </style>
 
+    <!-- Event date style (abstract, see definitions below) -->
     <style name="eventDate">
         <item name="android:textColor">#1e47a6</item>
         <item name="android:textAlignment">center</item>
@@ -22,13 +23,36 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <!-- Begin event date -->
     <style name="eventDateBegin" parent="eventDate">
         <item name="android:textSize">19sp</item>
 
     </style>
+
+    <!-- End event date -->
     <style name="eventDateEnd" parent="eventDate">
         <item name="android:textSize">13sp</item>
     </style>
 
+    <!-- Central app bar button -->
+    <style name="floating_button" parent="Widget.Design.FloatingActionButton">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- Dimmed background -->
+    <style name="dimmed_background">
+        <item name="android:background">#9a000000</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:elevation">17dp</item>
+    </style>
+
+    <!-- Date title calendar -->
+    <style name="date_title_size">
+        <item name="android:textSize">@dimen/date_title_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:textColor">#000</item>
+    </style>
 
 </resources>

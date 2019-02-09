@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Main activity layout
+-->
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -8,21 +11,20 @@
         tools:context=".ui.MainActivity">
 
 
+    <!-- Pager of day_fragment -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
         <androidx.viewpager.widget.ViewPager
                 android:id="@+id/daysPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
         </androidx.viewpager.widget.ViewPager>
-
     </LinearLayout>
 
 
+    <!-- App bar (bottom) -->
     <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bar"
             android:layout_width="match_parent"
@@ -30,41 +32,32 @@
             android:layout_gravity="bottom"
             app:fabAlignmentMode="center"/>
 
+
+    <!-- Central app bar button -->
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             app:layout_anchor="@id/bar">
         <Button
-                style="@style/Widget.Design.FloatingActionButton"
-                app:layout_anchor="@id/bar"
-                android:gravity="center"
+                style="@style/floating_button"
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAllCaps="true"
-                android:text="Ajouter une tache"/>
+                app:layout_anchor="@id/bar"
+                android:text="@string/add_task"/>
     </LinearLayout>
 
 
-    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
-            <!--android:id="@+id/fab"-->
-            <!--android:tooltipText="Ajouter un texte"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:layout_anchor="@id/bar"-->
-
-            <!--/>-->
+    <!-- Dimmed background when bottom sheet is visible -->
     <View
+            style="@style/dimmed_background"
             android:id="@+id/bg"
-            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#9a000000"
-            android:elevation="17dp"/>
+            android:layout_height="match_parent"/>
 
+
+    <!-- Bottom sheet (settings) -->
     <include layout="@layout/settings_bottom_sheet" />
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

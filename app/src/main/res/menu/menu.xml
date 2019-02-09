@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:tools="http://schemas.android.com/tools"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:android="http://schemas.android.com/apk/res/android">
+<!--
+    App bottom bar menu
+-->
+<menu
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Open settings action -->
     <item
             android:id="@+id/action_settings"
-            android:title="settings"
-            app:showAsAction="ifRoom"
-            android:icon="@drawable/ic_menu" />
+            android:title="@string/settings_hover"
+            android:icon="@drawable/ic_menu"
+            app:showAsAction="ifRoom"/>
 </menu>
