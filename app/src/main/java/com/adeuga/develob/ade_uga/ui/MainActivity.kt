@@ -67,6 +67,8 @@ class MainActivity : AppCompatActivity() {
         /* Setting "add task" button behavior */
         this.floatingAddTask.setOnClickListener{
             Log.d(">>>>","Floating")
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            fragmentTransaction.add(R.id.main_activity, AddTaskFragment()).addToBackStack(null).commit() // addToBackStack(null) to provide back navigation
         }
 
         /* Setting DaysPagerAdapter with current date */
