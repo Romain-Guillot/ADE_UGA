@@ -3,6 +3,8 @@ android:
   components:
     - android-28
     - build-tools-27.0.3
+    - sys-img-x86-android-26
+
 
 env:
   global:
