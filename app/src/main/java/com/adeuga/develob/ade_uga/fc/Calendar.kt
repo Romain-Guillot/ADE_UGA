@@ -55,7 +55,7 @@ class Calendar(var date:Date, var db:AppDatabase) : Serializable {
         notifyUI()
     }
 
-    fun setFragment(ui:UIcalendar) {
+    fun addUI(ui:UIcalendar) {
         this.ui = ui
     }
 
