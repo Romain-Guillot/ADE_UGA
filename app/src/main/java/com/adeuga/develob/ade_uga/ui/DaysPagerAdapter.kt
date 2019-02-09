@@ -18,6 +18,7 @@ class DaysPagerAdapter(fm: FragmentManager, private var initalDate:Date, var ini
     init {
         Log.d(">>>", "initial " + initialPosition)
         currentCalendar = com.adeuga.develob.ade_uga.fc.Calendar(initalDate, db)
+        currentCalendar.getEvents()
     }
 
     private fun addDayToDate(d:Date, i:Int) : Date {
@@ -34,9 +35,14 @@ class DaysPagerAdapter(fm: FragmentManager, private var initalDate:Date, var ini
     }
 
 
+    fun callbackUpdate() {
+        Log.d(">>>>", "Callback")
+    }
 
     override fun getCount(): Int {
         return Integer.MAX_VALUE
     }
+
+
 
 }

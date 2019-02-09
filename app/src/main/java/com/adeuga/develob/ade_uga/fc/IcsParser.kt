@@ -10,41 +10,51 @@ import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList
 
 
-class IcsParser constructor (val idResource:Int, val date:Date) : AsyncTask<Void, Void, ArrayList<CalendarEvent>>()  {
+class IcsParser(val idResource:Int, val date:Date) : AsyncTask<Void, Void, ArrayList<CalendarEvent>>()  {
 
-    init {
-//        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-//        StrictMode.setThreadPolicy(policy)
-
+    constructor(idResource: Int, date : Date, content:String) : this(idResource, date) {
+        this.content = content
     }
 
+    private var content : String? = null
+
+
     override fun doInBackground(vararg params: Void?): ArrayList<CalendarEvent> {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-        val dateChoosed:String = dateFormat.format(date)
-        val urlStr = "https://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=11608&projectId=7&calType=ical&firstDate=$dateChoosed&lastDate=$dateChoosed"
-        Log.d(">>>Debug", urlStr)
-        val url = URL(urlStr)
-        val conection = url.openConnection()
-        conection.connect()
-        val lenghtOfFile:Int = conection.contentLength
+        val c : String? = this.content
+        if(c == null ) {
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val dateChoosed:String = dateFormat.format(date)
+            val urlStr = "https://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=11608&projectId=7&calType=ical&firstDate=$dateChoosed&lastDate=$dateChoosed"
+            Log.d(">>>Debug", urlStr)
+            val url = URL(urlStr)
+            val conection = url.openConnection()
+            conection.connect()
+            val lenghtOfFile:Int = conection.contentLength
 
-        val inBuff = BufferedInputStream(url.openStream())
-        var dataBuff = ByteArray(1024)
+            val inBuff = BufferedInputStream(url.openStream())
+            var dataBuff = ByteArray(1024)
 
-        var byteReaded = inBuff.read(dataBuff, 0, 1024)
-        if(byteReaded == -1) {
-            //error
-            throw Exception()
+            var byteReaded = inBuff.read(dataBuff, 0, 1024)
+            if(byteReaded == -1) {
+                //error
+                throw Exception()
+            }
+            var content = String(dataBuff,0, byteReaded)
+            var tmp = 0
+            while(byteReaded < lenghtOfFile) {
+                tmp = inBuff.read(dataBuff, 0, 1024)
+                if(tmp == -1) break
+                byteReaded += tmp
+                content  += String(dataBuff, 0, tmp)
+            }
+            this.content = content
+            return this.buildCalendar(content)
+        } else {
+            return this.buildCalendar(c)
+
         }
-        var content = String(dataBuff,0, byteReaded)
-        var tmp = 0
-        while(byteReaded < lenghtOfFile) {
-            tmp = inBuff.read(dataBuff, 0, 1024)
-            if(tmp == -1) break
-            byteReaded += tmp
-            content  += String(dataBuff, 0, tmp)
-        }
-        return this.buildCalendar(content)
+
+
     }
 
 
@@ -113,6 +123,11 @@ class IcsParser constructor (val idResource:Int, val date:Date) : AsyncTask<Void
         dataFormat.timeZone = TimeZone.getTimeZone("GMT")
         val date:Date = dataFormat.parse(str.trim())
         return date
+    }
+
+    fun getContent() : String {
+        val c = this.content?:""
+        return c
     }
 
 

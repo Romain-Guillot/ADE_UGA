@@ -17,6 +17,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.room.Room
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.adeuga.develob.ade_uga.R
 import com.adeuga.develob.ade_uga.fc.Calendar
 import com.adeuga.develob.ade_uga.fc.CalendarEvent
@@ -32,8 +33,8 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var daysPager: ViewPager
-    private lateinit var daysPagerAdapter:DaysPagerAdapter
+    public lateinit var daysPager: ViewPager
+    public lateinit var daysPagerAdapter:DaysPagerAdapter
     private lateinit var settingsBottomSheetLayout:LinearLayout
     private lateinit var settingsBottomSheet: BottomSheetBehavior<LinearLayout>
     private lateinit var floatingAddTask:Button
@@ -73,17 +74,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         val sdf = SimpleDateFormat("yyyy/MM/dd")
-        val d: Date = sdf.parse("2019/01/24")
+//        val d: Date = sdf.parse("2019/01/24")
+        val d: Date = java.util.Calendar.getInstance().time
+
         val initPos:Int = Int.MAX_VALUE/2
-        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "calendar").build()
+        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "calendar").fallbackToDestructiveMigration().build()
 
 
         daysPager = findViewById(R.id.daysPager)
         daysPagerAdapter = DaysPagerAdapter(supportFragmentManager, d, initPos, db)
         daysPager.adapter = daysPagerAdapter
         daysPager.currentItem = initPos
-
-
 
     }
 
@@ -110,9 +111,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
-        Log.d(">>>", "TOUCHE")
-        if(event?.action == MotionEvent.ACTION_DOWN && settingsBottomSheet.state == BottomSheetBehavior.STATE_EXPANDED) {
-            Log.d(">>>>", "TES")
+        if(event?.action == MotionEvent.ACTION_UP && settingsBottomSheet.state == BottomSheetBehavior.STATE_EXPANDED) {
             var outSheet = Rect()
             settingsBottomSheetLayout.getGlobalVisibleRect(outSheet)
             if(!outSheet.contains(event.x.toInt(), event.y.toInt())) {

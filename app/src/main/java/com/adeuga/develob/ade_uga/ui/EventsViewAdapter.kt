@@ -42,5 +42,4 @@ class EventsViewAdapter(private val eventsList:ArrayList<CalendarEvent>) : Recyc
         return MyViewHolder(eventView)
     }
 
-
 }

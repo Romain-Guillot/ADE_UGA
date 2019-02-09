@@ -7,9 +7,8 @@ import com.adeuga.develob.ade_uga.fc.CalendarEvent
 import java.sql.Date
 import java.util.*
 
-@Entity(tableName = "days")
+@Entity(tableName = "days", primaryKeys = arrayOf("date"))
 data class DbDayData(
-    @PrimaryKey var uid: Int,
-    @ColumnInfo(name = "date") var date: String?,
-    @ColumnInfo(name = "content") var lastName: String?
+    @ColumnInfo(name = "date") var date: String,
+    @ColumnInfo(name = "content") var content: String
 )
