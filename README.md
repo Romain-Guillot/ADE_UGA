@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/develob/ADE_UGA.svg?branch=task)](https://travis-ci.com/develob/ADE_UGA)
+
 ## TODO
 
 - class Task link with date, link between Calendar (card with color below with color depending on tag 
