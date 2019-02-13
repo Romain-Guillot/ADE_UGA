@@ -14,11 +14,28 @@ interface DbDayDataDao {
 //    fun findByName(first: String, last: String): DbDayData
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(day: DbDayData)
+    fun insertEvent(day: DbDayData)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertTask(event: DbTask)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertTag(event: DbTag)
+
+
+    @Query("SELECT * FROM days WHERE date == :date LIMIT 1")
+    fun getEvents(date:String) : DbDayData
+
+    @Query("SELECT * FROM tasks WHERE date == :date")
+    fun getTasks(date:String) : Array<DbTask>
+
+    @Query("SELECT * FROM tags")
+    fun getTags() : Array<DbTag>
+
+    @Query("SELECT * FROM tags WHERE name == :name")
+    fun getTag(name:String) : DbTag
+
 
     @Delete
     fun delete(day: DbDayData)
-
-    @Query("SELECT * FROM days WHERE date == :date LIMIT 1")
-    fun get(date:String) : DbDayData
 }

@@ -20,11 +20,11 @@ class EventsViewAdapter(private val eventsList:ArrayList<CalendarEvent>) : Recyc
      * Defined graphical representation of list items (events)
      */
     class MyViewHolder constructor (v:View) : RecyclerView.ViewHolder(v)  {
-        var title:TextView = v.findViewById(R.id.events_title)
-        var description:TextView = v.findViewById(R.id.events_description)
-        var begin:TextView = v.findViewById(R.id.events_begin)
-        var end:TextView = v.findViewById(R.id.events_end)
-        var location:TextView = v.findViewById(R.id.events_location)
+        var title: TextView = v.findViewById(R.id.events_title)
+        var description: TextView = v.findViewById(R.id.events_description)
+        var begin: TextView = v.findViewById(R.id.events_begin)
+        var end: TextView = v.findViewById(R.id.events_end)
+        var location: TextView = v.findViewById(R.id.events_location)
     }
 
     /**
@@ -40,8 +40,8 @@ class EventsViewAdapter(private val eventsList:ArrayList<CalendarEvent>) : Recyc
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val inflater:LayoutInflater = LayoutInflater.from(parent.context)
-        val eventView:View = inflater.inflate(R.layout.calendar_event, parent, false)
+        val inflater: LayoutInflater = LayoutInflater.from(parent.context)
+        val eventView: View = inflater.inflate(R.layout.calendar_event, parent, false)
         return MyViewHolder(eventView)
     }
 

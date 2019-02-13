@@ -69,7 +69,7 @@ class DayFragment : Fragment(), UIcalendar {
     private fun setEventsList() {
         if (calendar != null) {
             this.titleView?.text = calendar?.getDateToString()
-            val events : ArrayList<CalendarEvent>? = this.calendar?.getEvents() // get events
+            val events : ArrayList<CalendarEvent>? = this.calendar?.getEvents() // getEvents events
 
             if (events != null) { // set recycler list with events
                 val view:View? = view
@@ -106,7 +106,7 @@ class DayFragment : Fragment(), UIcalendar {
 
     /**
      *  UIcalendar interface function
-     *  Event occured when calendar notify that events list changed
+     *  Event occur when calendar notify that events list changed
      */
     override fun notifyEventListChanged() {
         activity?.runOnUiThread {
@@ -117,11 +117,21 @@ class DayFragment : Fragment(), UIcalendar {
 
     /**
      *  UIcalendar interface function
-     *  Events occured when calendar notify that new data are downloaded
+     *  Events occur when calendar notify that new data are downloaded
      */
     override fun notifyDataDownloaded() {
         activity?.runOnUiThread {
             Toast.makeText(context, "Mise à jour réussie", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
+     * UIcalendar interface function
+     * Events occur when calender notify that tasks list changed (and so load)
+     */
+    override fun notifyTasksChanged() {
+        activity?.runOnUiThread {
+
         }
     }
 

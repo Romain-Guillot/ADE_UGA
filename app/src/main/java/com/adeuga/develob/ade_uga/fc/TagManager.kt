@@ -1,27 +1,33 @@
 package com.adeuga.develob.ade_uga.fc
 
 import android.graphics.Color
-import com.adeuga.develob.ade_uga.fc.db.AppDatabase
 
 
-class TagManager (val db:AppDatabase) {
+class TagManager {
 
-    val tags: ArrayList<Tag> = ArrayList()
 
-    class Tag(val name:String, val color:Color)
+    class Tag(val name:String, val color:Color) {
+        private val tasks = ArrayList<Task>()
 
-    init {
-        Thread {
-            getAllTagFromDatabase()
+        fun addTask(t:Task) {
+            tasks.add(t)
         }
     }
 
-    fun getTag(tagName : String) : Tag {
-        return tags[0]
+    companion object {
+        private val tags: ArrayList<Tag> = ArrayList()
+
+        val unknownTag:Tag = Tag("Unknonwn", Color())
+
+        fun getTag(name:String, color:String) : Tag {
+            for(t:Tag in tags) {
+                if(t.name == name) return t
+            }
+            val newTag = Tag(name, Color())
+            tags.add(newTag)
+            return newTag
+        }
     }
 
-    fun getAllTagFromDatabase() {
-        
-    }
 
 }

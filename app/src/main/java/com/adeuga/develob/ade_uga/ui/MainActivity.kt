@@ -25,13 +25,13 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var daysPager: ViewPager
-    private lateinit var daysPagerAdapter:DaysPagerAdapter
-    private lateinit var settingsBottomSheetLayout:LinearLayout
+    private lateinit var daysPagerAdapter: DaysPagerAdapter
+    private lateinit var settingsBottomSheetLayout: LinearLayout
     private lateinit var settingsBottomSheet: BottomSheetBehavior<LinearLayout>
-    private lateinit var floatingAddTask:Button
-    private lateinit var toolbar:BottomAppBar
-    private lateinit var bg:View
-
+    private lateinit var floatingAddTask: Button
+    private lateinit var toolbar: BottomAppBar
+    private lateinit var bg: View
+    lateinit var db: AppDatabase
     /**
      * Define views
      * Setting the bottom sheet for settings
@@ -72,9 +72,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         /* Setting DaysPagerAdapter with current date */
-        val currentDate:Date = java.util.Calendar.getInstance().time
-        val initPos:Int = Int.MAX_VALUE/2 // initial position (negative position is impossible)
-        val db:AppDatabase = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "calendar").fallbackToDestructiveMigration().build()
+        val currentDate: Date = java.util.Calendar.getInstance().time
+        val initPos: Int = Int.MAX_VALUE/2 // initial position (negative position is impossible)
+        this.db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "calendar").fallbackToDestructiveMigration().build()
         this.daysPagerAdapter = DaysPagerAdapter(supportFragmentManager, currentDate, initPos, db)
         this.daysPager.adapter = daysPagerAdapter
         this.daysPager.currentItem = initPos
