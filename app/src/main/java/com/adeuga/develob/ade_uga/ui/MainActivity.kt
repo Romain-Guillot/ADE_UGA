@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: BottomAppBar
     private lateinit var bg: View
     lateinit var db: AppDatabase
+
     /**
      * Define views
      * Setting the bottom sheet for settings
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         /* Init views */
+        this.db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "calendar").fallbackToDestructiveMigration().build()
         this.toolbar = findViewById(R.id.bar)
         this.bg = findViewById(R.id.bg)
         this.settingsBottomSheetLayout = findViewById(R.id.settings_bottom_sheet)
@@ -66,7 +68,6 @@ class MainActivity : AppCompatActivity() {
 
         /* Setting "add task" button behavior */
         this.floatingAddTask.setOnClickListener{
-            Log.d(">>>>","Floating")
             val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.add(R.id.main_activity, AddTaskFragment()).addToBackStack(null).commit() // addToBackStack(null) to provide back navigation
         }
@@ -74,11 +75,11 @@ class MainActivity : AppCompatActivity() {
         /* Setting DaysPagerAdapter with current date */
         val currentDate: Date = java.util.Calendar.getInstance().time
         val initPos: Int = Int.MAX_VALUE/2 // initial position (negative position is impossible)
-        this.db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "calendar").fallbackToDestructiveMigration().build()
         this.daysPagerAdapter = DaysPagerAdapter(supportFragmentManager, currentDate, initPos, db)
         this.daysPager.adapter = daysPagerAdapter
         this.daysPager.currentItem = initPos
     }
+
 
     /**
      * Create menu (bottom right) from menu template file menu/menu.xml
@@ -88,14 +89,27 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+
     /**
      * This function is called when a click is detected on menu
      * Menu items :
      *     - action_settings : display bottom sheet settings
+     *     - home : bottom left icon (navigation, to return current day)
      * @param item Menu item definied in menu/menu.xml, can be indentified with its id
      */
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
+            android.R.id.home -> {
+//                val currentDate: Date = java.util.Calendar.getInstance().time
+//                val initPos: Int = Int.MAX_VALUE/2 // initial position (negative position is impossible)
+//                Log.d(">>>", "OK1")
+//                this.daysPagerAdapter = DaysPagerAdapter(supportFragmentManager, currentDate, initPos, db)
+//                Log.d(">>>", "OK2")
+//                this.daysPager.adapter = daysPagerAdapter
+//                Log.d(">>>", "OK3")
+//                this.daysPager.currentItem = initPos
+//                Log.d(">>>", "OK4")
+            }
             R.id.action_settings -> {
                 when (this.settingsBottomSheet.state) {
                     BottomSheetBehavior.STATE_EXPANDED  -> this.settingsBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -120,5 +134,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.dispatchTouchEvent(event)
+    }
+
+
+
+
+    fun notifyTasksChanged() {
+        Log.d(">>>", "UPDATE")
+        val page1: DayFragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.daysPager + ":" + daysPager.currentItem) as DayFragment
+        val page2: DayFragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.daysPager + ":" + (daysPager.currentItem-1)) as DayFragment
+        val page3: DayFragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.daysPager + ":" + (daysPager.currentItem+1)) as DayFragment
+
+        page1.updateCalendar(tasks = true, events = false)
+        page2.updateCalendar(tasks = true, events = false)
+        page3.updateCalendar(tasks = true, events = false)
     }
 }

@@ -55,4 +55,12 @@
         <item name="android:textColor">#000</item>
     </style>
 
+    <!-- Subtitle add task -->
+    <style name="subtitle_addtask">
+        <item name="android:textSize">@dimen/subtitle_size</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textColor">#cf000000</item>
+    </style>
+
 </resources>

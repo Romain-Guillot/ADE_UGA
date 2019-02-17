@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/add_task_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -16,17 +18,55 @@
                 android:id="@+id/add_task_action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_task"/>
+                android:layout_gravity="right"
+                android:backgroundTint="@color/colorAccent"
+                android:text="@string/add_task"
+                android:layout_margin="@dimen/marginBoderScreen"/>
 
         <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="#fff">
             <EditText
+                    android:id="@+id/addtask_title"
                     android:hint="Title"
                     android:ems="10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/marginBoderScreen"
+                android:orientation="vertical">
+            <TextView
+                    style="@style/subtitle_addtask"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_date"/>
+            <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:id="@+id/addtask_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="temp"/>
+            <TextView
+                    style="@style/subtitle_addtask"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_tag"/>
+
+            <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/addtask_tagchipgroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true">
+
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
+
+
     </LinearLayout>
 
 

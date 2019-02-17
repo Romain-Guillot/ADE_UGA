@@ -19,8 +19,8 @@ interface DbDayDataDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTask(event: DbTask)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTag(event: DbTag)
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    fun insertTag(event: DbTag)
 
 
     @Query("SELECT * FROM days WHERE date == :date LIMIT 1")
@@ -29,11 +29,11 @@ interface DbDayDataDao {
     @Query("SELECT * FROM tasks WHERE date == :date")
     fun getTasks(date:String) : Array<DbTask>
 
-    @Query("SELECT * FROM tags")
-    fun getTags() : Array<DbTag>
-
-    @Query("SELECT * FROM tags WHERE name == :name")
-    fun getTag(name:String) : DbTag
+//    @Query("SELECT * FROM tags")
+//    fun getTags() : Array<DbTag>
+//
+//    @Query("SELECT * FROM tags WHERE name == :name")
+//    fun getTag(name:String) : DbTag
 
 
     @Delete

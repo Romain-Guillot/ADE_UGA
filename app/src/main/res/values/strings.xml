@@ -2,4 +2,6 @@
     <string name="app_name">ADE_UGA</string>
     <string name="add_task">Ajouter une tache</string>
     <string name="settings_hover">Paramètres</string>
+    <string name="select_tag">Selectionner un tag :</string>
+    <string name="select_date">Selectionner une date :</string>
 </resources>

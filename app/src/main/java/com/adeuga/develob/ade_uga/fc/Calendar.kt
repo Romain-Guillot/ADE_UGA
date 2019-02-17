@@ -52,34 +52,30 @@ class Calendar(var date:Date, var db:AppDatabase) : Serializable {
      *
      */
     private fun readDatabase(forceReloadData:Boolean = false) {
-        Log.d(">>> DB","DB BEGIN")
         val res:DbDayData? = this.dao.getEvents(Utils.getStandartDate(this.date))
         if(res == null || forceReloadData) {
             val parser = IcsParser(0, this.date)
             parser.execute()
             this.events = parser.get()
             dao.insertEvent(DbDayData(Utils.getStandartDate(this.date), parser.getContent()))
-            Log.d(">>>>", "Data inserted")
             this.ui?.notifyDataDownloaded()
         }else {
             val parser = IcsParser(0, this.date, res.content)
             parser.execute()
             this.events = parser.get()
+            notifyUI()
         }
-        notifyUI()
     }
 
     /**
      *
      */
     private fun loadTasks() {
-        Log.d(">>>", "DB TASK BEGIN")
+        this.tasks = ArrayList()
         val queryResult:Array<DbTask>? = this.dao.getTasks(Utils.getStandartDate(this.date))
         if(queryResult != null) {
             for(t:DbTask in queryResult) {
-                Log.d(">>>>task", t.title)
-                val queryTagResult:DbTag? = dao.getTag(name=t.tag)
-                val tag:TagManager.Tag = if(queryTagResult == null) TagManager.unknownTag else TagManager.getTag(queryTagResult.name, queryTagResult.color)
+                val tag: TagManager.Tag = TagManager.getTag(t.tag)
                 val task = Task(t.title, this.date, tag)
                 tag.addTask(task)
                 this.tasks.add(task)
@@ -98,11 +94,11 @@ class Calendar(var date:Date, var db:AppDatabase) : Serializable {
     /**
      *
      */
-    fun update() {
+    fun update(events:Boolean = true, tasks:Boolean = true) {
+        Log.d(">>>", "reload")
         Thread {
-            Log.d(">>>", "Update")
-            readDatabase(forceReloadData = true)
-            loadTasks()
+            if(events) readDatabase(forceReloadData = true)
+            if(tasks) loadTasks()
         }.start()
     }
 

@@ -2,10 +2,10 @@
 
 ## TODO
 
-current work :
-UI to handle list task (Adapter) set RecyclerList in DayFragment, etc
- 
-- tag : color / name, find a solution to find text color (white or black)
-- create task : content + day (calendar picker)
-- Button to return current day
+current :
+Add task done, todo : 
 
+- text color in chips (white or black)
+- Button to return current day
+- Delete tasks
+- Settings (drop database events, drop database tasks)

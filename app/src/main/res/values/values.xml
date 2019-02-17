@@ -5,6 +5,20 @@
     <dimen name="event_normal_size">14sp</dimen>
 
 
+    <!-- Task dimen-->
+    <dimen name="task_padding">10dp</dimen>
+
+
     <!-- general calendar dimen -->
     <dimen name="date_title_size">30sp</dimen>
+
+
+    <!-- General dimension -->
+    <dimen name="marginBoderScreen">10dp</dimen>
+    <dimen name="marginBetweenItemList">10dp</dimen>
+    <dimen name="pagerMarginBottom">80dp</dimen>
+
+
+    <!-- Add task dimensions -->
+    <dimen name="subtitle_size">14sp</dimen>
 </resources>

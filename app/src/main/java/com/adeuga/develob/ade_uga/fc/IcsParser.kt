@@ -1,7 +1,6 @@
 package com.adeuga.develob.ade_uga.fc
 
 import android.os.AsyncTask
-import android.util.Log
 import java.io.BufferedInputStream
 import java.net.URL
 import java.util.*
@@ -25,7 +24,6 @@ class IcsParser(val idResource:Int, val date:Date) : AsyncTask<Void, Void, Array
             val dateFormat = SimpleDateFormat("yyyy-MM-dd")
             val dateChoosed:String = dateFormat.format(date)
             val urlStr = "https://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=11608&projectId=7&calType=ical&firstDate=$dateChoosed&lastDate=$dateChoosed"
-            Log.d(">>>Debug", urlStr)
             val url = URL(urlStr)
             val conection = url.openConnection()
             conection.connect()

@@ -1,12 +1,10 @@
 package com.adeuga.develob.ade_uga.fc
 
-import android.graphics.Color
-
 
 class TagManager {
 
 
-    class Tag(val name:String, val color:Color) {
+    class Tag(val name:String, val color:String) {
         private val tasks = ArrayList<Task>()
 
         fun addTask(t:Task) {
@@ -15,17 +13,21 @@ class TagManager {
     }
 
     companion object {
-        private val tags: ArrayList<Tag> = ArrayList()
+        val tags: ArrayList<Tag> = ArrayList()
+        val unknownTag: Tag = Tag("Unknonwn", "#969696")
 
-        val unknownTag:Tag = Tag("Unknonwn", Color())
+        init {
+            tags.add(Tag("Info", "#5342DA"))
+            tags.add(Tag("Important", "#DA425D"))
+            tags.add(Tag("TO DO", "#42DAA5"))
+        }
 
-        fun getTag(name:String, color:String) : Tag {
+
+        fun getTag(name: String) : Tag {
             for(t:Tag in tags) {
                 if(t.name == name) return t
             }
-            val newTag = Tag(name, Color())
-            tags.add(newTag)
-            return newTag
+            return unknownTag
         }
     }
 

@@ -21,9 +21,9 @@ data class DbTask(
     @ColumnInfo(name="tag") var tag: String
 )
 
-@Entity(tableName = "tags", primaryKeys = arrayOf("name"))
-data class DbTag(
-    @ColumnInfo(name = "name") var name: String,
-    @ColumnInfo(name = "color") var color: String
-)
+//@Entity(tableName = "tags", primaryKeys = arrayOf("name"))
+//data class DbTag(
+//    @ColumnInfo(name = "name") var name: String,
+//    @ColumnInfo(name = "color") var color: String
+//)
 

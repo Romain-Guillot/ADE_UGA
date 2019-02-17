@@ -6,7 +6,10 @@ import com.adeuga.develob.ade_uga.fc.db.DbTask
 import com.adeuga.develob.ade_uga.fc.db.Utils
 import java.util.*
 
-class Task(val title:String, val date:Date, private val tag:TagManager.Tag) {
+class Task(title:String?, val date:Date, private val tag:TagManager.Tag) {
+
+    val title = title?: "Unknonwn"
+
 
     fun addToDatabase(db:AppDatabase) {
         val dao = db.dao()
@@ -14,11 +17,11 @@ class Task(val title:String, val date:Date, private val tag:TagManager.Tag) {
         dao.insertTask(DbTask)
     }
 
-    fun getBackgroundColor() : Color {
-        return this.tag.color
+    fun getBackgroundColor() : Int {
+        return Color.parseColor(this.tag.color)
     }
 
     fun getTagTitle() : String {
-        return this.tag.name
+        return this.tag.name.toUpperCase()
     }
 }

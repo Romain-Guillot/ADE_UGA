@@ -10,11 +10,11 @@ import java.util.*
 class CalendarEvent : Comparable<CalendarEvent>, Serializable {
 
     var title:String? = null
-        set(value) { field = value?.trim()}
+        set(value) { field = value?.trim()} // trim(): cleaning data
     var description:String? = null
-        set(value) { field = value?.trim()}
+        set(value) { field = value?.trim()} // trim(): cleaning data
     var location:String? = null
-        set(value) { field = value?.trim()}
+        set(value) { field = value?.trim()} // trim(): cleaning data
     var begin:Date? = null
     var end:Date? = null
 
