@@ -42,6 +42,7 @@
                 <!-- Tasks list -->
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/dayTasksListView"
+                        android:layout_marginTop="@dimen/marginBetweenItemList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:scrollbars="vertical">

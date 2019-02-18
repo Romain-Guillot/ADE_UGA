@@ -14,14 +14,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-        <Button
-                android:id="@+id/add_task_action"
-                android:layout_width="wrap_content"
+        <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:backgroundTint="@color/colorAccent"
-                android:text="@string/add_task"
-                android:layout_margin="@dimen/marginBoderScreen"/>
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/marginBoderScreen">
+            <ImageButton
+                    android:id="@+id/addtask_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/close"
+                    android:layout_centerVertical="true"
+                    android:background="#00000000"/>
+            <Button
+                    android:id="@+id/add_task_action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:backgroundTint="@color/colorAccent"
+                    android:text="@string/add_task"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

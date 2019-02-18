@@ -4,4 +4,5 @@
     <string name="settings_hover">Paramètres</string>
     <string name="select_tag">Selectionner un tag :</string>
     <string name="select_date">Selectionner une date :</string>
+    <string name="settings">Paramètres</string>
 </resources>

@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.adeuga.develob.ade_uga.R
 import com.adeuga.develob.ade_uga.fc.Task
@@ -27,8 +24,8 @@ class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private var chipTagGroup: ChipGroup? = null
     private var tagChipsAdapter: TagChipsAdapter? = null
     private var selectDate: Button? = null
+    private var closeButton: ImageButton? = null
     private lateinit var selectedDate: Calendar
-
     private lateinit var datePicker: DatePickerDialog
     private lateinit var db:AppDatabase
 
@@ -50,6 +47,7 @@ class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         this.editTextTitle = view?.findViewById(R.id.addtask_title)
         this.chipTagGroup = view?.findViewById(R.id.addtask_tagchipgroup)
         this.selectDate = view?.findViewById(R.id.addtask_date)
+        this.closeButton = view?.findViewById(R.id.addtask_close)
 
         addTaskButton?.setOnClickListener {
             processAddTask()
@@ -57,6 +55,10 @@ class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
         selectDate?.setOnClickListener {
             this.datePicker.show()
+        }
+
+        closeButton?.setOnClickListener{
+            this.fragmentManager?.popBackStack()
         }
 
         setTagList()

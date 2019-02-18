@@ -55,6 +55,7 @@
     <!-- Dimmed background when bottom sheet is visible -->
     <View
             style="@style/dimmed_background"
+            android:clickable="true"
             android:id="@+id/bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

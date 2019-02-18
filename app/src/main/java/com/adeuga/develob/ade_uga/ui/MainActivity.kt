@@ -57,7 +57,8 @@ class MainActivity : AppCompatActivity() {
         /* Setting "settings bottom sheet" behavior */
         this.settingsBottomSheet.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                Log.d(">>>> state changed", newState.toString())
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED || newState == BottomSheetBehavior.STATE_HIDDEN) {
                      bg.visibility = View.GONE
                 }
             }
