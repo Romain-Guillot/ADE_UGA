@@ -19,8 +19,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
 
-class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
+class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
     private var addTaskButton:Button? = null
     private var editTextTitle: EditText? = null
@@ -32,9 +32,11 @@ class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private lateinit var datePicker: DatePickerDialog
     private lateinit var db:AppDatabase
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.add_task, container, false)
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -76,7 +78,7 @@ class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         }else {
             val tagChipsAdapterFinal = this.tagChipsAdapter
             if (tagChipsAdapterFinal != null) {
-                val task = Task(title, this.selectedDate.time, tagChipsAdapterFinal.getCheckedTag())
+                val task = Task(title, this.selectedDate.time, tagChipsAdapterFinal.getCheckedTag(), null)
                 thread {
                     task.addToDatabase(this.db)
                 }

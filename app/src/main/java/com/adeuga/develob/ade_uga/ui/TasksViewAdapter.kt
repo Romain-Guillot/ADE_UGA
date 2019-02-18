@@ -1,17 +1,20 @@
 package com.adeuga.develob.ade_uga.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.adeuga.develob.ade_uga.fc.Task
 import com.adeuga.develob.ade_uga.R
+import com.adeuga.develob.ade_uga.fc.db.AppDatabase
 
 /**
  *
  */
-class TasksViewAdapter(val tasks: ArrayList<Task>) : RecyclerView.Adapter<TasksViewAdapter.MyViewHolder>() {
+class TasksViewAdapter(val tasks: ArrayList<Task>, val db:AppDatabase) : RecyclerView.Adapter<TasksViewAdapter.MyViewHolder>() {
 
     /**
      *
@@ -28,8 +31,12 @@ class TasksViewAdapter(val tasks: ArrayList<Task>) : RecyclerView.Adapter<TasksV
         val task: Task = this.tasks[position]
         holder.title.text = task.title
         holder.tagName.text = task.getTagTitle()
-
         holder.itemView.setBackgroundColor(task.getBackgroundColor())
+        holder.itemView.findViewById<ImageButton>(R.id.task_delete).setOnClickListener{
+            Thread {
+                tasks[position].deleteToDatabase(this.db)
+            }.start()
+        }
     }
 
     /**

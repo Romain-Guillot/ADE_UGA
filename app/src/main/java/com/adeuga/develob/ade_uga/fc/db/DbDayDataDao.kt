@@ -35,7 +35,10 @@ interface DbDayDataDao {
 //    @Query("SELECT * FROM tags WHERE name == :name")
 //    fun getTag(name:String) : DbTag
 
+    @Query("DELETE FROM tasks WHERE id == :id")
+    fun deleteTask(id: Int)
 
-    @Delete
-    fun delete(day: DbDayData)
+
+//    @Delete
+//    fun delete(day: DbDayData)
 }

@@ -78,8 +78,6 @@ class DayFragment : Fragment(), UIcalendar {
      * Set events from calendar attached to the fragment in the recycler list
      */
     private fun setEventsList() {
-        Log.d(">>>> set events", calendar?.getEvents()?.size.toString())
-
         if (calendar != null) {
             this.titleView?.text = calendar?.getDateToString()
             val events : ArrayList<CalendarEvent>? = this.calendar?.getEvents() // getEvents events
@@ -105,9 +103,8 @@ class DayFragment : Fragment(), UIcalendar {
      */
     private fun setTasksList() {
         val tasks:ArrayList<Task>? = this.calendar?.getTasks()
-        Log.d(">>>> set tasks", tasks?.size.toString())
         if(tasks != null) {
-            this.tasksAdapter = TasksViewAdapter(tasks)
+            this.tasksAdapter = TasksViewAdapter(tasks, (activity as MainActivity).db)
             this.tasksView?.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(this.context)
@@ -120,7 +117,6 @@ class DayFragment : Fragment(), UIcalendar {
      *  Update calendar attached to the fragment
      */
     fun updateCalendar(events:Boolean = true, tasks:Boolean = true) {
-        Log.d(">>>>>", "UPDATE 2" + this.calendar.toString() + " " + this.toString())
         this.calendar?.update(events=events, tasks=tasks)
     }
 

@@ -17,8 +17,8 @@ class TagManager {
         val unknownTag: Tag = Tag("Unknonwn", "#969696")
 
         init {
-            tags.add(Tag("Info", "#5342DA"))
-            tags.add(Tag("Important", "#DA425D"))
+            tags.add(Tag("Info", "#4287DA"))
+            tags.add(Tag("Important", "#D0595E"))
             tags.add(Tag("TO DO", "#42DAA5"))
         }
 

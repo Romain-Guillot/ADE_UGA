@@ -63,7 +63,7 @@ class Calendar(var date:Date, var db:AppDatabase) : Serializable {
             val parser = IcsParser(0, this.date, res.content)
             parser.execute()
             this.events = parser.get()
-            notifyUI()
+            notifyUIeventsChanged()
         }
     }
 
@@ -76,7 +76,7 @@ class Calendar(var date:Date, var db:AppDatabase) : Serializable {
         if(queryResult != null) {
             for(t:DbTask in queryResult) {
                 val tag: TagManager.Tag = TagManager.getTag(t.tag)
-                val task = Task(t.title, this.date, tag)
+                val task = Task(t.title, this.date, tag, this, t.id)
                 tag.addTask(task)
                 this.tasks.add(task)
             }
@@ -95,7 +95,6 @@ class Calendar(var date:Date, var db:AppDatabase) : Serializable {
      *
      */
     fun update(events:Boolean = true, tasks:Boolean = true) {
-        Log.d(">>>", "reload")
         Thread {
             if(events) readDatabase(forceReloadData = true)
             if(tasks) loadTasks()
@@ -105,11 +104,11 @@ class Calendar(var date:Date, var db:AppDatabase) : Serializable {
     /**
      *
      */
-    private fun notifyUI() {
+    fun notifyUIeventsChanged() {
         this.ui?.notifyEventListChanged()
     }
 
-    private fun notifyUItasksChanged() {
+    fun notifyUItasksChanged() {
         this.ui?.notifyTasksChanged()
     }
 
