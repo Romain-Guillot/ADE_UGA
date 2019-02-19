@@ -16,10 +16,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
 
-
+/**
+ * Fragment to add a new task
+ * It's just a from : title, date, tag
+ */
 class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
-    private var addTaskButton:Button? = null
+    private var saveButton:Button? = null
     private var editTextTitle: EditText? = null
     private var chipTagGroup: ChipGroup? = null
     private var tagChipsAdapter: TagChipsAdapter? = null
@@ -35,21 +38,22 @@ class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
 
+    /**
+     * Init views and others attributes, set listener of close button, select date button and save button
+     */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         this.selectedDate = Calendar.getInstance()
-
         this.db = (activity as MainActivity).db
         this.datePicker = DatePickerDialog(this.context, this, this.selectedDate.get(Calendar.YEAR), this.selectedDate.get(Calendar.MONTH), this.selectedDate.get(Calendar.DAY_OF_MONTH))
-
-        this.addTaskButton = view?.findViewById(R.id.add_task_action)
+        this.saveButton = view?.findViewById(R.id.add_task_action)
         this.editTextTitle = view?.findViewById(R.id.addtask_title)
         this.chipTagGroup = view?.findViewById(R.id.addtask_tagchipgroup)
         this.selectDate = view?.findViewById(R.id.addtask_date)
         this.closeButton = view?.findViewById(R.id.addtask_close)
 
-        addTaskButton?.setOnClickListener {
+        saveButton?.setOnClickListener {
             processAddTask()
         }
 
@@ -65,6 +69,10 @@ class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         setSelectedDate(this.selectedDate.get(Calendar.YEAR), this.selectedDate.get(Calendar.MONTH), this.selectedDate.get(Calendar.DAY_OF_MONTH))
     }
 
+
+    /**
+     * Fill ChipGroup with all tag (from TagManager) compagnion object
+     */
     private fun setTagList() {
         val ctx : Context? = this.context
         val chipsGroup : ChipGroup? = this.chipTagGroup
@@ -73,6 +81,10 @@ class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         }
     }
 
+
+    /**
+     * Process data from the form to create and add a task to the database
+     */
     private fun processAddTask() {
         val title:String? = editTextTitle?.text?.toString()
         if(title == null || title.isEmpty()) {
@@ -85,7 +97,7 @@ class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                     task.addToDatabase(this.db)
                 }
                 Toast.makeText(this.context, "Tache ajoutée !", Toast.LENGTH_LONG).show()
-                (activity as MainActivity).notifyTasksChanged()
+                (activity as MainActivity).notifyDataChanged(events = false, tasks = true)
                 this.fragmentManager?.popBackStack()
             }else {
                 Toast.makeText(this.context, "Erreur interne", Toast.LENGTH_LONG).show()
@@ -94,10 +106,17 @@ class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
 
+    /**
+     * Events occurend when date from DatePickerDialog is set
+     */
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         setSelectedDate(year, month, dayOfMonth)
     }
 
+
+    /**
+     * Set the date selected in the date picker button
+     */
     private fun setSelectedDate(year: Int, month: Int, dayOfMonth: Int) {
         val df = SimpleDateFormat("EEEE d MMMM")
         this.selectedDate.set(year, month, dayOfMonth)

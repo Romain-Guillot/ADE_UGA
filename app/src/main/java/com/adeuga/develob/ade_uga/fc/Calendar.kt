@@ -1,6 +1,5 @@
 package com.adeuga.develob.ade_uga.fc
 
-import android.util.Log
 import com.adeuga.develob.ade_uga.fc.db.*
 import java.io.Serializable
 import java.text.SimpleDateFormat
@@ -9,19 +8,19 @@ import kotlin.collections.ArrayList
 
 
 /**
- *
+ * One calendar = 1 day
  */
-class Calendar(var date:Date, var db:AppDatabase) : Serializable {
+class Calendar(var date:Date, db:AppDatabase) : Serializable {
 
     private var events = ArrayList<CalendarEvent>()
     private var tasks = ArrayList<Task>()
+    @Transient
     private var ui:UIcalendar? = null
-    private var dao:DbDayDataDao = db.dao()
 
     init {
         Thread{
-            readDatabase()
-            loadTasks()
+            readDatabase(db)
+            loadTasks(db)
         }.start()
     }
 
@@ -51,13 +50,13 @@ class Calendar(var date:Date, var db:AppDatabase) : Serializable {
     /**
      *
      */
-    private fun readDatabase(forceReloadData:Boolean = false) {
-        val res:DbDayData? = this.dao.getEvents(Utils.getStandartDate(this.date))
+    private fun readDatabase(db: AppDatabase, forceReloadData:Boolean = false) {
+        val res:DbDayData? = db.dao().getEvents(Utils.getStandartDate(this.date))
         if(res == null || forceReloadData) {
             val parser = IcsParser(0, this.date)
             parser.execute()
             this.events = parser.get()
-            dao.insertEvent(DbDayData(Utils.getStandartDate(this.date), parser.getContent()))
+            db.dao().insertEvent(DbDayData(Utils.getStandartDate(this.date), parser.getContent()))
             this.ui?.notifyDataDownloaded()
         }else {
             val parser = IcsParser(0, this.date, res.content)
@@ -70,9 +69,9 @@ class Calendar(var date:Date, var db:AppDatabase) : Serializable {
     /**
      *
      */
-    private fun loadTasks() {
+    private fun loadTasks(db: AppDatabase) {
         this.tasks = ArrayList()
-        val queryResult:Array<DbTask>? = this.dao.getTasks(Utils.getStandartDate(this.date))
+        val queryResult:Array<DbTask>? = db.dao().getTasks(Utils.getStandartDate(this.date))
         if(queryResult != null) {
             for(t:DbTask in queryResult) {
                 val tag: TagManager.Tag = TagManager.getTag(t.tag)
@@ -94,10 +93,10 @@ class Calendar(var date:Date, var db:AppDatabase) : Serializable {
     /**
      *
      */
-    fun update(events:Boolean = true, tasks:Boolean = true) {
+    fun update(db: AppDatabase, events:Boolean = true, tasks:Boolean = true) {
         Thread {
-            if(events) readDatabase(forceReloadData = true)
-            if(tasks) loadTasks()
+            if(events) readDatabase(db, forceReloadData = true)
+            if(tasks) loadTasks(db)
         }.start()
     }
 

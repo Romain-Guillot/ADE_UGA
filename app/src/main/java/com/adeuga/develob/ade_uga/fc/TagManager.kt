@@ -1,10 +1,12 @@
 package com.adeuga.develob.ade_uga.fc
 
+import java.io.Serializable
 
-class TagManager {
+
+class TagManager  {
 
 
-    class Tag(val name:String, val color:String) {
+    class Tag(val name:String, val color:String) : Serializable {
         private val tasks = ArrayList<Task>()
 
         fun addTask(t:Task) {

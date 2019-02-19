@@ -5,10 +5,11 @@ import android.util.Log
 import com.adeuga.develob.ade_uga.fc.db.AppDatabase
 import com.adeuga.develob.ade_uga.fc.db.DbTask
 import com.adeuga.develob.ade_uga.fc.db.Utils
+import java.io.Serializable
 import java.util.*
 
 
-class Task(title:String?, val date:Date, private val tag:TagManager.Tag, private val calendar:Calendar?) {
+class Task(title:String?, val date:Date, private val tag:TagManager.Tag, private val calendar:Calendar?) : Serializable {
 
     constructor(title:String?, date:Date, tag:TagManager.Tag, calendar:Calendar, id:Int) : this(title, date, tag, calendar){
         this.id = id
@@ -34,7 +35,7 @@ class Task(title:String?, val date:Date, private val tag:TagManager.Tag, private
         }else {
             Log.d(">>>>", "Impossible de delete")
         }
-        calendar?.update(events = false, tasks = true)
+        calendar?.update(db, events = false, tasks = true)
         calendar?.notifyUItasksChanged()
 
     }

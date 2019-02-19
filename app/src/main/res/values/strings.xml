@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">ADE_UGA</string>
     <string name="add_task">Ajouter une tache</string>
+    <string name="save_task">Sauvegarder</string>
     <string name="settings_hover">Paramètres</string>
     <string name="select_tag">Selectionner un tag :</string>
     <string name="select_date">Selectionner une date :</string>
     <string name="settings">Paramètres</string>
+    <string name="settings_delete_events">Supprimer l\'emploi du temps</string>
+    <string name="settings_delete_tasks">Supprimer les tâches</string>
 </resources>

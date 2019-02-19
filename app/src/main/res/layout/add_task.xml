@@ -32,8 +32,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:backgroundTint="@color/colorAccent"
-                    android:text="@string/add_task"
-                    android:layout_alignParentEnd="true"
+                    android:text="@string/save_task"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"/>
         </RelativeLayout>
 

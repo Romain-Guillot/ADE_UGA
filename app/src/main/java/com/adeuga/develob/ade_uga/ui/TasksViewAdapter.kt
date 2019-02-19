@@ -1,6 +1,5 @@
 package com.adeuga.develob.ade_uga.ui
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,21 +10,26 @@ import com.adeuga.develob.ade_uga.fc.Task
 import com.adeuga.develob.ade_uga.R
 import com.adeuga.develob.ade_uga.fc.db.AppDatabase
 
+
 /**
+ * Custom RecyclerView Adapter to handle calendar task list
  *
+ * @property tasks tasks to display
+ * @property db database
  */
 class TasksViewAdapter(val tasks: ArrayList<Task>, val db:AppDatabase) : RecyclerView.Adapter<TasksViewAdapter.MyViewHolder>() {
 
     /**
-     *
+     *  Define a graphical representation of a task
      */
     class MyViewHolder constructor(v:View) : RecyclerView.ViewHolder(v) {
         var title: TextView = v.findViewById(R.id.task_title)
         var tagName: TextView = v.findViewById(R.id.task_tag_name)
     }
 
+
     /**
-     *
+     * Bind graphical item task with real task object
      */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val task: Task = this.tasks[position]
@@ -39,9 +43,7 @@ class TasksViewAdapter(val tasks: ArrayList<Task>, val db:AppDatabase) : Recycle
         }
     }
 
-    /**
-     *
-     */
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         val eventView: View = inflater.inflate(R.layout.calendar_task, parent, false)
@@ -49,9 +51,6 @@ class TasksViewAdapter(val tasks: ArrayList<Task>, val db:AppDatabase) : Recycle
     }
 
 
-    /**
-     *
-     */
     override fun getItemCount(): Int = this.tasks.size
 
 

@@ -38,6 +38,12 @@ interface DbDayDataDao {
     @Query("DELETE FROM tasks WHERE id == :id")
     fun deleteTask(id: Int)
 
+    @Query("DELETE FROM tasks")
+    fun deleteAllTasks()
+
+    @Query("DELETE FROM days")
+    fun deleteAllEvents()
+
 
 //    @Delete
 //    fun delete(day: DbDayData)

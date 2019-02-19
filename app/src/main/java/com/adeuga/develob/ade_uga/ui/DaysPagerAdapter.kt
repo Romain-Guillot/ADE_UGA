@@ -43,10 +43,4 @@ class DaysPagerAdapter(fm: FragmentManager, private var initialDate:Date, privat
 
 
     override fun getCount(): Int = Integer.MAX_VALUE
-
-    fun setInititalPosition(i: Int) {
-        this.initialPosition = i
-    }
-
-
 }

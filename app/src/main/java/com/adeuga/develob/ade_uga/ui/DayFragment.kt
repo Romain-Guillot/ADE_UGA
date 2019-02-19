@@ -1,7 +1,6 @@
 package com.adeuga.develob.ade_uga.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +15,7 @@ import com.adeuga.develob.ade_uga.fc.Calendar
 import com.adeuga.develob.ade_uga.fc.CalendarEvent
 import com.adeuga.develob.ade_uga.fc.Task
 import com.adeuga.develob.ade_uga.fc.UIcalendar
+import com.adeuga.develob.ade_uga.fc.db.AppDatabase
 import kotlin.collections.ArrayList
 
 
@@ -36,7 +36,7 @@ class DayFragment : Fragment(), UIcalendar {
     private var refreshLayout: SwipeRefreshLayout? = null
 
     /**
-     *
+     * Create a new instance of the fragment (if not exist) with argument (calendar) bundled
      */
     companion object {
         const val DAYFRAGMENT_ARG = "DAYFRAGMENTARGS"
@@ -99,7 +99,7 @@ class DayFragment : Fragment(), UIcalendar {
     }
 
     /**
-     *
+     * Set tasks from calendar attached to the fragment in the recycler list
      */
     private fun setTasksList() {
         val tasks:ArrayList<Task>? = this.calendar?.getTasks()
@@ -116,16 +116,17 @@ class DayFragment : Fragment(), UIcalendar {
     /**
      *  Update calendar attached to the fragment
      */
-    fun updateCalendar(events:Boolean = true, tasks:Boolean = true) {
-        this.calendar?.update(events=events, tasks=tasks)
+    fun updateCalendar(db: AppDatabase, events:Boolean = true, tasks:Boolean = true) {
+        this.calendar?.update(db, events=events, tasks=tasks)
     }
 
     /**
      *  Setting refresh layout behavior (update calender on scroll)
      */
     private fun setRefreshLayout() {
+        val db = (activity as MainActivity).db
         this.refreshLayout?.setOnRefreshListener {
-            updateCalendar()
+            updateCalendar(db)
         }
     }
 
@@ -162,7 +163,4 @@ class DayFragment : Fragment(), UIcalendar {
             this.refreshLayout?.isRefreshing = false
         }
     }
-
-
-
 }
