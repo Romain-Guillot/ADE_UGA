@@ -16,6 +16,7 @@ import com.adeuga.develob.ade_uga.fc.CalendarEvent
  */
 class EventsViewAdapter(private val eventsList:ArrayList<CalendarEvent>) : RecyclerView.Adapter<EventsViewAdapter.MyViewHolder>() {
 
+
     /**
      * Defined graphical representation of list items (events)
      */
@@ -26,6 +27,7 @@ class EventsViewAdapter(private val eventsList:ArrayList<CalendarEvent>) : Recyc
         var end: TextView = v.findViewById(R.id.events_end)
         var location: TextView = v.findViewById(R.id.events_location)
     }
+
 
     /**
      * Bind graphical item (MyViewHolder) with real calendar instance
@@ -39,11 +41,13 @@ class EventsViewAdapter(private val eventsList:ArrayList<CalendarEvent>) : Recyc
         viewHolder.location.text = event.location
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         val eventView: View = inflater.inflate(R.layout.calendar_event, parent, false)
         return MyViewHolder(eventView)
     }
+
 
     override fun getItemCount(): Int = this.eventsList.size
 }

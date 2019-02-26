@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import androidx.viewpager.widget.ViewPager
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -14,7 +13,6 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.room.Dao
 import androidx.room.Room
 import com.adeuga.develob.ade_uga.R
 import com.adeuga.develob.ade_uga.fc.db.AppDatabase
@@ -25,7 +23,8 @@ import kotlin.concurrent.thread
 
 
 /**
- * Main android activity that display the FragmentPager (DaysPagerAdapter)
+ * Main android activity that display the FragmentPager (DaysPagerAdapter) of DayFragment
+ * Handle also the AppBar (settings / add task button / return to current day)
  */
 class MainActivity : AppCompatActivity() {
 
@@ -63,7 +62,6 @@ class MainActivity : AppCompatActivity() {
         /* Setting "settings bottom sheet" behavior */
         this.settingsBottomSheet.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                Log.d(">>>> state changed", newState.toString())
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED || newState == BottomSheetBehavior.STATE_HIDDEN) {
                      bg.visibility = View.GONE
                 }
@@ -135,7 +133,7 @@ class MainActivity : AppCompatActivity() {
      * This function is called when a click is detected on menu
      * Menu items :
      *     - action_settings : display bottom sheet settings
-     *     - home : bottom left icon (navigation, to return current day)
+     *     - home : bottom left icon (navigation, to return to the current day)
      * @param item Menu item definied in menu/menu.xml, can be indentified with its id
      */
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -160,7 +158,7 @@ class MainActivity : AppCompatActivity() {
 
 
     /**
-     * This function is called when a touch event is detected.
+     * This function is called when touch event is detected.
      * This function handle the bottom sheet close behavior when user click outside the sheet
      */
     override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
@@ -178,6 +176,7 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Update calendar attached to the 3 fragment (current -1, current, current +1)
+     * TODO : Find a much better solution !
      */
     fun notifyDataChanged(tasks: Boolean = true, events: Boolean = true) {
         val page1: DayFragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.daysPager + ":" + daysPager.currentItem) as DayFragment

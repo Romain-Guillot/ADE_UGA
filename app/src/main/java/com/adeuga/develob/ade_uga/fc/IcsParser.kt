@@ -9,15 +9,27 @@ import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList
 
 
+/**
+ * ICS Parser (parse ics calendar field) to return a CalendarEvents list
+ * WARNING : Not all keywords are supported
+ * WARNING : Syntax errors doesn't handled
+ * WARNING : Develop for a specific purpose, see "to-do" note below to improve this class and understand its limitations
+ * TODO : Change the class to return an object more generic to represent the ics file, and handle the complete ics keywords / functionality
+ * TODO : So probably create a new package to handle the ics parser / calendar object generator
+ */
 class IcsParser(val idResource:Int, val date:Date) : AsyncTask<Void, Void, ArrayList<CalendarEvent>>()  {
+
+    private var content : String? = null
 
     constructor(idResource: Int, date : Date, content:String) : this(idResource, date) {
         this.content = content
     }
 
-    private var content : String? = null
 
-
+    /**
+     * Get the content text of the ics file (from an url) and return a Calendar object (build form buildCalendar method)
+     * or return null
+     */
     override fun doInBackground(vararg params: Void?): ArrayList<CalendarEvent>? {
         val c : String? = this.content
         if(c == null ) {
@@ -25,22 +37,20 @@ class IcsParser(val idResource:Int, val date:Date) : AsyncTask<Void, Void, Array
             val dateChoosed:String = dateFormat.format(date)
             val urlStr = "https://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=11608&projectId=7&calType=ical&firstDate=$dateChoosed&lastDate=$dateChoosed"
             val url = URL(urlStr)
-
             val conection: URLConnection = url.openConnection()
+
             try {
                 conection.connect()
-
             }catch (t : Throwable) {
                 return null
             }
-            val lenghtOfFile:Int = conection.contentLength
 
+            val lenghtOfFile:Int = conection.contentLength
             val inBuff = BufferedInputStream(url.openStream())
             var dataBuff = ByteArray(1024)
 
             var byteReaded = inBuff.read(dataBuff, 0, 1024)
-            if(byteReaded == -1) {
-                //error
+            if(byteReaded == -1) { //error
                 return null
             }
             var content = String(dataBuff,0, byteReaded)
@@ -55,13 +65,13 @@ class IcsParser(val idResource:Int, val date:Date) : AsyncTask<Void, Void, Array
             return this.buildCalendar(content)
         } else {
             return this.buildCalendar(c)
-
         }
-
-
     }
 
 
+    /**
+     * Build the calendar from the [ics] string (that represent an ics content)
+     */
     fun buildCalendar(ics:String) :ArrayList<CalendarEvent> {
         val lines:Array<String> = ics.split("\n").toTypedArray()
         var i = 0
@@ -116,12 +126,14 @@ class IcsParser(val idResource:Int, val date:Date) : AsyncTask<Void, Void, Array
             }
             events.add(currentEvent)
             i+=1
-
         }
-
         return events
     }
 
+
+    /**
+     * Get the date from a string
+     */
     fun toDate(str:String) : Date {
         val dataFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'")
         dataFormat.timeZone = TimeZone.getTimeZone("GMT")
@@ -129,10 +141,12 @@ class IcsParser(val idResource:Int, val date:Date) : AsyncTask<Void, Void, Array
         return date
     }
 
-    fun getContent() : String {
-        val c = this.content?:""
-        return c
-    }
+
+    /**
+     * Return the ics file content (notably used to store data in database / cache)
+     */
+    fun getContent() : String = this.content?:""
+
 
 
 }

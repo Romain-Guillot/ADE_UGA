@@ -16,9 +16,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
 
+
 /**
  * Fragment to add a new task
- * It's just a from : title, date, tag
+ * So it's like a from with this fields: title, date, tag
+ * This fragment handle the form
  */
 class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
@@ -56,11 +58,9 @@ class AddTaskFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         saveButton?.setOnClickListener {
             processAddTask()
         }
-
         selectDate?.setOnClickListener {
             this.datePicker.show()
         }
-
         closeButton?.setOnClickListener{
             this.fragmentManager?.popBackStack()
         }

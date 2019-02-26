@@ -6,7 +6,8 @@ import java.util.*
 
 
 /**
- *
+ * Single event with [title], [description], [location], and a [begin] and [end] date
+ * Just a data class, Comparable interface is implemented to compare events by date order.
  */
 class CalendarEvent : Comparable<CalendarEvent>, Serializable {
 
@@ -18,14 +19,6 @@ class CalendarEvent : Comparable<CalendarEvent>, Serializable {
         set(value) { field = value?.trim()} // trim(): cleaning data
     var begin:Date? = null
     var end:Date? = null
-
-
-    /**
-     *
-     */
-    fun getBegin() : String {
-        return begin.toString()
-    }
 
 
     /**

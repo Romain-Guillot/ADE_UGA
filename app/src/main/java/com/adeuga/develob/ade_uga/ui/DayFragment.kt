@@ -1,7 +1,6 @@
 package com.adeuga.develob.ade_uga.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,23 +20,23 @@ import kotlin.collections.ArrayList
 
 
 /**
- *  Custom fragment to display calendar events (notably used in DaysPager)
- *  Implement UIcalendar interface to handle notifications
+ *  Custom fragment to display calendar events (day view) (fragment used in DaysPager)
+ *  Implement UIcalendar interface to handle notifications from the FC
  */
 class DayFragment : Fragment(), UIcalendar {
 
     private var eventsView: RecyclerView? = null
     private var eventsAdapter: EventsViewAdapter? = null
-
     private var tasksView: RecyclerView? = null
     private var tasksAdapter: TasksViewAdapter? = null
-
     private var titleView: TextView? = null
     private var calendar: Calendar? = null
     private var refreshLayout: SwipeRefreshLayout? = null
 
+
     /**
      * Create a new instance of the fragment (if not exist) with argument (calendar) bundled
+     * Avoid constructor with fragments !
      */
     companion object {
         const val DAYFRAGMENT_ARG = "DAYFRAGMENTARGS"
@@ -56,8 +55,9 @@ class DayFragment : Fragment(), UIcalendar {
         return inflater.inflate(R.layout.day_fragment, container, false)
     }
 
+
     /**
-     * (re)define calendar when activity is created from serialized arguments (constructors not allowed)
+     * Define calendar from serialized arguments (bundled)
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -66,7 +66,6 @@ class DayFragment : Fragment(), UIcalendar {
         this.tasksView = view?.findViewById(R.id.dayTasksListView)
         this.eventsView = view?.findViewById(R.id.dayViewListView)
         this.refreshLayout = view?.findViewById(R.id.refreshLayout)
-
         this.calendar = arguments?.getSerializable(DayFragment.DAYFRAGMENT_ARG) as Calendar //deserialize calendar from args
         this.calendar?.addUI(this)
 
@@ -75,8 +74,9 @@ class DayFragment : Fragment(), UIcalendar {
         setTasksList()
     }
 
+
     /**
-     * Set events from calendar attached to the fragment in the recycler list
+     * Set events in the recycler list (events get from the calendar attached to the fragment)
      */
     private fun setEventsList() {
         if (calendar != null) {
@@ -93,14 +93,13 @@ class DayFragment : Fragment(), UIcalendar {
                             adapter = eventsAdapter
                         }
                 }
-            } else {
             }
-        }else {
         }
     }
 
+
     /**
-     * Set tasks from calendar attached to the fragment in the recycler list
+     * Set tasks in the recycler list (tasks get from calendar attached to the fragment)
      */
     private fun setTasksList() {
         val tasks:ArrayList<Task>? = this.calendar?.getTasks()
@@ -114,12 +113,15 @@ class DayFragment : Fragment(), UIcalendar {
         }
     }
 
+
     /**
      *  Update calendar attached to the fragment
+     *  Some parameters (events, tasks) to upadte only required lists
      */
     fun updateCalendar(db: AppDatabase, events:Boolean = true, tasks:Boolean = true) {
         this.calendar?.update(db, events=events, tasks=tasks)
     }
+
 
     /**
      *  Setting refresh layout behavior (update calender on scroll)
@@ -131,20 +133,19 @@ class DayFragment : Fragment(), UIcalendar {
         }
     }
 
+
     /**
      *  UIcalendar interface function
      *  Event occur when calendar notify that events list changed
      */
     override fun notifyEventListChanged() {
-        Log.d(">>>", "YES")
         activity?.runOnUiThread {
-            Log.d(">>>", "YES2")
             setEventsList()
             this.refreshLayout?.isRefreshing = false
             Toast.makeText(context, "Succès.", Toast.LENGTH_SHORT).show()
-            Log.d(">>>", "YES3")
         }
     }
+
 
     /**
      *  UIcalendar interface function
@@ -158,6 +159,7 @@ class DayFragment : Fragment(), UIcalendar {
         }
     }
 
+
     /**
      * UIcalendar interface function
      * Events occur when calender notify that tasks list changed (and so load)
@@ -168,6 +170,7 @@ class DayFragment : Fragment(), UIcalendar {
             this.refreshLayout?.isRefreshing = false
         }
     }
+
 
     /**
      * UIcalendar interface function
