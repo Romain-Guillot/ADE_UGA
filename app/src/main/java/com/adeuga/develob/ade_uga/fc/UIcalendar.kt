@@ -6,4 +6,6 @@ interface UIcalendar {
     fun notifyDataDownloaded()
 
     fun notifyTasksChanged()
+
+    fun notifyError(msg:String)
 }

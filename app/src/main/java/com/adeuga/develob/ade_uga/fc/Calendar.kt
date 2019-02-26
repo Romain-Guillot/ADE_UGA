@@ -8,7 +8,7 @@ import kotlin.collections.ArrayList
 
 
 /**
- * One calendar = 1 day
+ *
  */
 class Calendar(var date:Date, db:AppDatabase) : Serializable {
 
@@ -24,6 +24,7 @@ class Calendar(var date:Date, db:AppDatabase) : Serializable {
         }.start()
     }
 
+
     /**
      *
      */
@@ -31,6 +32,7 @@ class Calendar(var date:Date, db:AppDatabase) : Serializable {
         val df = SimpleDateFormat("EEEE d MMMM")
         return df.format(date).capitalize()
     }
+
 
     /**
      *
@@ -40,6 +42,7 @@ class Calendar(var date:Date, db:AppDatabase) : Serializable {
         return this.events
     }
 
+
     /**
      *
      */
@@ -47,24 +50,29 @@ class Calendar(var date:Date, db:AppDatabase) : Serializable {
         return this.tasks
     }
 
+
     /**
      *
      */
     private fun readDatabase(db: AppDatabase, forceReloadData:Boolean = false) {
         val res:DbDayData? = db.dao().getEvents(Utils.getStandartDate(this.date))
+        var parser:IcsParser?
         if(res == null || forceReloadData) {
-            val parser = IcsParser(0, this.date)
-            parser.execute()
-            this.events = parser.get()
+            parser = IcsParser(0, this.date)
             db.dao().insertEvent(DbDayData(Utils.getStandartDate(this.date), parser.getContent()))
-            this.ui?.notifyDataDownloaded()
         }else {
-            val parser = IcsParser(0, this.date, res.content)
-            parser.execute()
-            this.events = parser.get()
+            parser = IcsParser(0, this.date, res.content)
+        }
+        parser.execute()
+        val parserRes : ArrayList<CalendarEvent>? = parser.get()
+        if(parserRes != null) {
+            this.events = parserRes
             notifyUIeventsChanged()
+        }else {
+            notifyUIerror("Erreur téléchargement.")
         }
     }
+
 
     /**
      *
@@ -83,12 +91,14 @@ class Calendar(var date:Date, db:AppDatabase) : Serializable {
         notifyUItasksChanged()
     }
 
+
     /**
      *
      */
     fun addUI(ui:UIcalendar) {
         this.ui = ui
     }
+
 
     /**
      *
@@ -100,6 +110,7 @@ class Calendar(var date:Date, db:AppDatabase) : Serializable {
         }.start()
     }
 
+
     /**
      *
      */
@@ -107,8 +118,17 @@ class Calendar(var date:Date, db:AppDatabase) : Serializable {
         this.ui?.notifyEventListChanged()
     }
 
+
+    /**
+     *
+     */
     fun notifyUItasksChanged() {
         this.ui?.notifyTasksChanged()
+    }
+
+
+    fun notifyUIerror(msg: String) {
+        this.ui?.notifyError(msg)
     }
 
 

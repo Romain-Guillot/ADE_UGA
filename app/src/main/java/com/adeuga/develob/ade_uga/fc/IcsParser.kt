@@ -4,7 +4,7 @@ import android.os.AsyncTask
 import java.io.BufferedInputStream
 import java.net.URL
 import java.util.*
-import java.lang.Exception
+import java.net.URLConnection
 import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList
 
@@ -18,15 +18,21 @@ class IcsParser(val idResource:Int, val date:Date) : AsyncTask<Void, Void, Array
     private var content : String? = null
 
 
-    override fun doInBackground(vararg params: Void?): ArrayList<CalendarEvent> {
+    override fun doInBackground(vararg params: Void?): ArrayList<CalendarEvent>? {
         val c : String? = this.content
         if(c == null ) {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd")
             val dateChoosed:String = dateFormat.format(date)
             val urlStr = "https://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=11608&projectId=7&calType=ical&firstDate=$dateChoosed&lastDate=$dateChoosed"
             val url = URL(urlStr)
-            val conection = url.openConnection()
-            conection.connect()
+
+            val conection: URLConnection = url.openConnection()
+            try {
+                conection.connect()
+
+            }catch (t : Throwable) {
+                return null
+            }
             val lenghtOfFile:Int = conection.contentLength
 
             val inBuff = BufferedInputStream(url.openStream())
@@ -35,7 +41,7 @@ class IcsParser(val idResource:Int, val date:Date) : AsyncTask<Void, Void, Array
             var byteReaded = inBuff.read(dataBuff, 0, 1024)
             if(byteReaded == -1) {
                 //error
-                throw Exception()
+                return null
             }
             var content = String(dataBuff,0, byteReaded)
             var tmp = 0

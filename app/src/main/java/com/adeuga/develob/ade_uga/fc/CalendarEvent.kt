@@ -4,6 +4,7 @@ import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 /**
  *
  */
@@ -18,12 +19,14 @@ class CalendarEvent : Comparable<CalendarEvent>, Serializable {
     var begin:Date? = null
     var end:Date? = null
 
+
     /**
      *
      */
     fun getBegin() : String {
         return begin.toString()
     }
+
 
     /**
      *
@@ -33,6 +36,7 @@ class CalendarEvent : Comparable<CalendarEvent>, Serializable {
         return dateStr
     }
 
+
     /**
      *
      */
@@ -40,6 +44,7 @@ class CalendarEvent : Comparable<CalendarEvent>, Serializable {
         val dateStr = SimpleDateFormat("HH:mm").format(this.end)
         return dateStr
     }
+
 
     /**
      *

@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.room.Dao
 import androidx.room.Room
 import com.adeuga.develob.ade_uga.R
@@ -140,15 +141,12 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             android.R.id.home -> {
-//                val currentDate: Date = java.util.Calendar.getInstance().time
-//                val initPos: Int = Int.MAX_VALUE/2 // initial position (negative position is impossible)
-//                Log.d(">>>", "OK1")
-//                this.daysPagerAdapter = DaysPagerAdapter(supportFragmentManager, currentDate, initPos, db)
-//                Log.d(">>>", "OK2")
-//                this.daysPager.adapter = daysPagerAdapter
-//                Log.d(">>>", "OK3")
-//                this.daysPager.currentItem = initPos
-//                Log.d(">>>", "OK4")
+                val builder: AlertDialog.Builder? = this.let {
+                    AlertDialog.Builder(it)
+                }
+                builder?.setMessage("Ne tente pas le diable...")?.setTitle("Ce bouton est buggé !")
+                val dialog: AlertDialog? = builder?.create()
+                dialog?.show()
             }
             R.id.action_settings -> {
                 when (this.settingsBottomSheet.state) {

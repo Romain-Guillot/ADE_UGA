@@ -1,6 +1,7 @@
 package com.adeuga.develob.ade_uga.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -135,9 +136,13 @@ class DayFragment : Fragment(), UIcalendar {
      *  Event occur when calendar notify that events list changed
      */
     override fun notifyEventListChanged() {
+        Log.d(">>>", "YES")
         activity?.runOnUiThread {
+            Log.d(">>>", "YES2")
             setEventsList()
             this.refreshLayout?.isRefreshing = false
+            Toast.makeText(context, "Succès.", Toast.LENGTH_SHORT).show()
+            Log.d(">>>", "YES3")
         }
     }
 
@@ -161,6 +166,17 @@ class DayFragment : Fragment(), UIcalendar {
         activity?.runOnUiThread {
             setTasksList()
             this.refreshLayout?.isRefreshing = false
+        }
+    }
+
+    /**
+     * UIcalendar interface function
+     * Events occur when calendar notify that an error occurred
+     */
+    override fun notifyError(msg: String) {
+        activity?.runOnUiThread {
+            this.refreshLayout?.isRefreshing = false
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
         }
     }
 }
