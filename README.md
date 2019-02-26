@@ -1,11 +1,11 @@
 [![Build Status](https://travis-ci.com/develob/ADE_UGA.svg?branch=task)](https://travis-ci.com/develob/ADE_UGA)
 
+Android application to display the schedule of the UGA Polytech department.
+
+
+
 ## TODO
 
-current :
-Add task done, todo : 
-
-- text color in chips (white or black)
-- Button to return current day
-- Delete tasks
-- Settings (drop database events, drop database tasks)
+See TODO in the code for more informations. Most important aspects to improve :
+- Tag system
+- Ics Parser
